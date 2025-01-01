@@ -15,20 +15,20 @@ const Create = () => {
   const AddProductHandler = (e) => {
     e.preventDefault();
 
-    // Validation
+    
     if (
-      title.trim().length < 5 ||
-      image.trim().length < 5 ||
-      category.trim().length < 5 ||
+      title.trim().length < 3 ||
+      image.trim().length < 3 ||
+      category.trim().length < 3 ||
       price.trim().length < 1 ||
-      description.trim().length < 5
+      description.trim().length < 3
     ) {
       alert("Each input must have at least 4 characters ");
       return;
     }
 
    
-    const newProduct = {
+    const product = {
       id: nanoid(),
       title,
       image,
@@ -38,7 +38,8 @@ const Create = () => {
     };
 
     
-    setProducts([...products, newProduct]);
+    setProducts([...products, product]);
+    localStorage.setItem("products", JSON.stringify(products))
     navigate("/")
 
     

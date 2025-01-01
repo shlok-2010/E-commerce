@@ -4,21 +4,21 @@ import axios from "../utils/axios";
 export const ProductContext = createContext();
 
 const Context = (props) => {
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState(JSON.parse(localStorage.getItem("products")) || null);
 
-  const getProducts = async () => {
-    try {
-      const { data } = await axios("/products");
-      setProducts(data);
-      console.log(data); 
-    } catch (error) {
-      console.log("Error fetching products:", error);
-    }
-  };
+  // const getProducts = async () => {
+  //   try {
+  //     const { data } = await axios("/products");
+  //     setProducts(data);
+  //     console.log(data); 
+  //   } catch (error) {
+  //     console.log("Error fetching products:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getProducts(); 
-  }, []); 
+  // useEffect(() => {
+  //   getProducts(); 
+  // }, []); 
 
   return (
     <ProductContext.Provider value={[products, setProducts]}>

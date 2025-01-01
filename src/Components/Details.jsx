@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ProductContext } from "../utils/Context";
 import Loading from "./Loading";
 
 const Details = () => {
+  const navigate = useNavigate();
   const [products] = useContext(ProductContext);
   const [product, setProduct] = useState(null);
   const { id } = useParams();
@@ -18,6 +19,14 @@ const Details = () => {
   if (!product) {
     return <Loading />; // Replace with a loading spinner or message
   }
+  const productDeleteHandler = (id) => {
+    const FilterProducts = products.filter((p) => p.id !== id);
+    console.log(FilterProducts)
+    setProduct(FilterProducts);
+    localStorage.setItem("products", JSON.stringify(FilterProducts));
+    navigate("/");
+    
+  };
 
   return (
     <div className="w-[70%] flex justify-between items-center h-full m-auto p-[10%]">
@@ -37,12 +46,12 @@ const Details = () => {
         >
           Edit
         </Link>
-        <Link
-          to={`/delete/${product.id}`}
+        <button
+          onClick={() => productDeleteHandler(product.id)}
           className="py-2 px-5 border rounded border-red-400 text-red-400"
         >
           Delete
-        </Link>
+        </button>
       </div>
     </div>
   );
